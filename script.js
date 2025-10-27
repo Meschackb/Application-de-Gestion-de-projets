@@ -1,8 +1,7 @@
 // script.js
 
-// -----------------------------------------------------------------
 // 1. Initialisation, Classes et Données de Base
-// -----------------------------------------------------------------
+
 
 const STORAGE_KEY = 'pms_data';
 const USERS_STORAGE_KEY = 'pms_users'; 
@@ -55,9 +54,9 @@ class Project {
     }
 }
 
-// -----------------------------------------------------------------
+
 // 2. Gestion du DOM et des Vues
-// -----------------------------------------------------------------
+
 
 const getElement = id => document.getElementById(id);
 
@@ -80,9 +79,9 @@ const showView = (viewName) => {
     }
 };
 
-// -----------------------------------------------------------------
+
 // 3. Gestion des Données (localStorage)
-// -----------------------------------------------------------------
+
 
 /** Récupère les données des projets du localStorage. */
 const getProjectData = () => {
@@ -121,9 +120,9 @@ const saveUsers = (users) => {
     localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
 };
 
-// -----------------------------------------------------------------
+
 // 4. Fonctions d'Authentification et de Rôle
-// -----------------------------------------------------------------
+
 
 const login = (username, password) => {
     const users = getUsers();
@@ -173,9 +172,9 @@ const checkAuth = () => {
 const isAdmin = () => loggedInUser && loggedInUser.role === 'admin';
 
 
-// -----------------------------------------------------------------
+
 // 5. Gestion des Vues (Dashboard, Projets, Détails)
-// -----------------------------------------------------------------
+
 
 /** Met à jour le tableau de bord avec les KPI globaux. */
 const updateDashboard = () => {
@@ -322,9 +321,8 @@ const setupProjectForm = (projectId = null) => {
 }
 
 
-// -----------------------------------------------------------------
+
 // 6. Logique de Gestion des Tâches (Kanban)
-// -----------------------------------------------------------------
 
 /** Rend le tableau Kanban des tâches pour le projet actuel. */
 const renderTaskColumns = (project) => {
@@ -462,9 +460,9 @@ const deleteTask = (taskId, projectId) => {
     }
 };
 
-// -----------------------------------------------------------------
+
 // 7. Logique de Gestion de l'Équipe (Vue 6)
-// -----------------------------------------------------------------
+
 
 /** Affiche la vue de gestion d'équipe et la liste des membres. */
 const renderTeamManagement = () => {
@@ -606,9 +604,7 @@ const deleteMember = (memberId) => {
 };
 
 
-// -----------------------------------------------------------------
 // 8. Initialisation et Écouteurs d'Événements
-// -----------------------------------------------------------------
 
 // Fonctions d'édition et de suppression de projet
 const editProject = (projectId) => {
