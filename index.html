@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMS - Gestion de Projets Avancée (V4)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <section id="auth-view" class="auth-view active-view">
+        <div class="auth-container">
+            <h2><i class="fas fa-user-shield"></i> Connexion - PMS</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="alert alert-error" id="login-error" style="display: none;"></div>
+                <button type="submit" class="btn btn-login btn-large">Se connecter</button>
+            </form>
+            <p class="hint">Test Admin : **admin** / **admin** | Test Membre : **membre** / **membre**</p>
+        </div>
+    </section>
+
+    <div id="app-container" style="display: none;">
+        <header>
+            <h1><i class="fas fa-project-diagram"></i> Système de Gestion de Projets</h1>
+            <div class="header-controls">
+                <span id="user-info">Connecté en tant que: **Admin** (<span id="user-role"></span>)</span>
+                <button id="show-about-btn" class="btn btn-info"><i class="fas fa-info-circle"></i> À Propos</button>
+                <button id="logout-btn" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+        </header>
+
+        <main>
+            <section id="dashboard-view" class="view active-view" style="display: none;">
+                <h2><i class="fas fa-tachometer-alt"></i> Tableau de Bord</h2>
+                <div class="project-summary-grid">
+                    <div class="summary-card total-projects">
+                        <h3>Projets Totaux</h3>
+                        <p id="total-projects-count">0</p>
+                    </div>
+                    <div class="summary-card active-projects">
+                        <h3>Tâches Actives</h3>
+                        <p id="active-tasks-count">0</p>
+                    </div>
+                    <div class="summary-card completed-projects">
+                        <h3>Tâches Terminées</h3>
+                        <p id="completed-tasks-count">0</p>
+                    </div>
+                    <div class="summary-card progress-avg">
+                        <h3>Progression Moyenne</h3>
+                        <p id="average-progress">0%</p>
+                    </div>
+                </div>
+
+                <div class="actions-panel">
+                    <button id="show-add-project-btn" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Ajouter un Nouveau Projet</button>
+                    <button id="show-project-list-btn" class="btn btn-secondary"><i class="fas fa-list-ul"></i> Voir tous les Projets</button>
+                    <button id="show-team-management-btn" class="btn btn-tertiary"><i class="fas fa-users"></i> Gérer l'Équipe</button>
+                </div>
+            </section>
+
+            <section id="project-form-view" class="view" style="display: none;">
+                <h2 id="project-form-title"><i class="fas fa-folder-plus"></i> Ajouter un Projet</h2>
+                <form id="project-form">
+                    <input type="hidden" id="project-id">
+                    <div class="form-group">
+                        <label for="project-name">Nom du Projet</label>
+                        <input type="text" id="project-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-description">Description</label>
+                        <textarea id="project-description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-manager">Chef de Projet (Manager)</label>
+                        <select id="project-manager" required></select> 
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-project-form-btn">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer le Projet</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="project-list-view" class="view" style="display: none;">
+                <h2><i class="fas fa-tasks"></i> Liste des Projets</h2>
+                <div id="project-list">
+                    </div>
+            </section>
+
+            <section id="project-detail-view" class="view" style="display: none;">
+                <button class="btn btn-back" id="back-to-list-btn"><i class="fas fa-arrow-left"></i> Retour à la Liste</button>
+                <h2 id="detail-project-name"></h2>
+                <div class="project-detail-header">
+                    <p>Progression Globale : <span id="detail-progress-percent" class="progress-percent">0%</span></p>
+                    <progress id="detail-progress-bar" value="0" max="100"></progress>
+                </div>
+                
+                <div class="task-management-area">
+                    <h3>Ajouter une Tâche</h3>
+                    <div class="task-input-section">
+                        <input type="text" id="new-task-text" placeholder="Description de la nouvelle tâche..." required>
+                        <select id="new-task-assignee"></select>
+                    </div>
+                    <div class="task-date-section">
+                        <div class="date-group">
+                            <label for="new-task-start-date">Début:</label>
+                            <input type="date" id="new-task-start-date" required>
+                        </div>
+                        <div class="date-group">
+                            <label for="new-task-end-date">Fin:</label>
+                            <input type="date" id="new-task-end-date" required>
+                        </div>
+                        <button id="add-task-to-project-btn" class="btn btn-primary"><i class="fas fa-plus"></i> Ajouter Tâche</button>
+                    </div>
+                    
+                    <h3 style="margin-top: 30px;"><i class="fas fa-calendar-alt"></i> Planning Kanban</h3>
+                    <div id="task-columns" class="task-columns">
+                        </div>
+                </div>
+            </section>
+            
+            <section id="about-view" class="view" style="display: none;">
+                <h2><i class="fas fa-info-circle"></i> À Propos du Système PMS</h2>
+                <div class="about-card">
+                    <h3>Informations du Développeur</h3>
+                    <p>Ce système de gestion de projets (PMS) a été conçu pour gérer des cas complexes d'équipes et de tâches, développé en HTML, CSS et JavaScript pur.</p>
+                    <hr>
+                    <p class="developer-info">Créé par : **Mechack BUKASA L.**</p>
+                    <p class="developer-info">Contact : meschacklukengu@gmail.com</p>
+                    <p class="developer-info">Téléphone : (+243) 972 847 505</p>
+                    <p class="developer-info">Version : 1.0.0</p>
+                </div>
+                <div class="form-actions centered-actions">
+                     <button type="button" class="btn btn-secondary" id="back-from-about-btn">RETOUR AU DASHBOARD</button>
+                </div>
+            </section>
+            
+            <section id="team-management-view" class="view" style="display: none;">
+                <h2><i class="fas fa-users-cog"></i> Gestion des Membres d'Équipe</h2>
+                <div class="team-management-container">
+                    
+                    <h3><i class="fas fa-user-plus"></i> Ajouter/Modifier un Membre</h3>
+                    <form id="team-member-form">
+                        <input type="hidden" id="member-id">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="member-name">Nom Complet</label>
+                                <input type="text" id="member-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="member-role">Rôle (Admin/Membre)</label>
+                                <select id="member-role" required>
+                                    <option value="member">Membre Régulier</option>
+                                    <option value="admin">Administrateur</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="member-username">Identifiant (Connexion)</label>
+                                <input type="text" id="member-username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="member-password">Mot de Passe</label>
+                                <input type="password" id="member-password" placeholder="Laisser vide pour ne pas changer">
+                            </div>
+                        </div>
+                        <div class="form-actions" style="justify-content: flex-start; margin-top: 15px;">
+                            <button type="submit" class="btn btn-primary" id="save-member-btn"><i class="fas fa-save"></i> Enregistrer Membre</button>
+                            <button type="button" class="btn btn-secondary" id="cancel-member-edit-btn">Annuler</button>
+                        </div>
+                    </form>
+
+                    <h3 style="margin-top: 40px;"><i class="fas fa-list"></i> Liste des Utilisateurs</h3>
+                    <div id="team-member-list">
+                        </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Système de Gestion de Projets Avancée (V4).</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
