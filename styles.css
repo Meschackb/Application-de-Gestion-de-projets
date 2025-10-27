@@ -1,6 +1,6 @@
 /* styles.css */
 
-/* --- Variables Globales --- */
+/* Variables Globales */
 :root {
     /* Couleurs principales de l'App PMS */
     --color-primary: #1976d2; /* Bleu foncé */
@@ -32,7 +32,7 @@ body {
     color: var(--color-text-dark);
 }
 
-/* --- Styles d'Authentification --- */
+/* Styles d'Authentification */
 .auth-view {
     display: flex;
     justify-content: center;
@@ -112,7 +112,7 @@ body {
     margin-bottom: 15px;
 }
 
-/* --- Styles de l'Application Principale (PMS) --- */
+/* Styles de l'Application Principale (PMS) */
 #app-container {
     padding: 0;
     max-width: 1200px;
@@ -205,7 +205,7 @@ h2 {
     background-color: #512da8;
 }
 
-/* --- Tableau de Bord (Dashboard) --- */
+/* Tableau de Bord (Dashboard) */
 .project-summary-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -240,7 +240,7 @@ h2 {
 }
 
 
-/* --- Formulaires & Actions --- */
+/* Formulaires & Actions */
 #project-form {
     max-width: 600px;
     margin: auto;
@@ -267,7 +267,7 @@ h2 {
     justify-content: center !important;
 }
 
-/* --- Liste des Projets --- */
+/* Liste des Projets */
 #project-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -309,7 +309,7 @@ h2 {
     padding: 8px 12px;
 }
 
-/* --- Détails du Projet (Kanban/Planning) --- */
+/* Détails du Projet (Kanban/Planning) */
 .btn-back {
     background-color: #607d8b;
     color: var(--color-text-light);
@@ -375,7 +375,7 @@ h2 {
 }
 
 
-/* --- Colonnes Kanban (Tâches) --- */
+/* Colonnes Kanban (Tâches) */
 .task-columns {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -469,7 +469,7 @@ h2 {
     text-decoration: underline;
 }
 
-/* --- Styles de la Vue 'À Propos' --- */
+/* Styles de la Vue À Propos */
 #about-view {
     text-align: center;
 }
@@ -503,7 +503,7 @@ h2 {
 }
 
 
-/* --- NOUVEAU : Gestion d'Équipe (Vue 6) --- */
+/* Gestion d'Équipe (Vue 6) */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -545,7 +545,7 @@ h2 {
 }
 
 
-/* --- Footer --- */
+/* Footer */
 footer {
     text-align: center;
     padding: 15px;
@@ -555,7 +555,7 @@ footer {
     font-size: 0.8em;
 }
 
-/* --- Media Queries --- */
+/* Media Queries */
 @media (max-width: 992px) {
     .project-summary-grid {
         grid-template-columns: repeat(2, 1fr);
